@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { db } from '../firebase';
 import { collection, addDoc, getDocs, query, where, updateDoc } from 'firebase/firestore';
+import './Input.css'; // Import a CSS file for styling
+import Header from './Heaer';
 
 const Input = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const [selectedSubOption, setSelectedSubOption] = useState('');
   const [amount, setAmount] = useState('');
-  const [selectedDate, setSelectedDate] = useState(new Date()); // Added selectedDate state
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -28,40 +30,35 @@ const Input = () => {
   const itemsCollectionRef = collection(db, "items");
 
   const handleSave = async () => {
-    // Check if all fields are selected
     if (selectedOption && selectedSubOption && amount && selectedDate) {
-      // Query Firestore to check if a document with the same option, sub-option, and date exists
       const querySnapshot = await getDocs(query(collection(db, "items"), 
         where("option", "==", selectedOption),
         where("subOption", "==", selectedSubOption),
-        where("date", "==", selectedDate.toISOString().split('T')[0]) // Convert selectedDate to ISO string and extract date part
+        where("date", "==", selectedDate.toISOString().split('T')[0])
       ));
-  
+
       if (!querySnapshot.empty) {
-        // If a document with the same option, sub-option, and date exists, update it
         const docRef = querySnapshot.docs[0].ref;
         const existingAmount = querySnapshot.docs[0].data().amount;
         const updatedAmount = existingAmount + parseInt(amount);
-  
+
         await updateDoc(docRef, {
           amount: updatedAmount,
         });
       } else {
-        // If no such document exists, create a new one
         await addDoc(itemsCollectionRef, {
           option: selectedOption,
           subOption: selectedSubOption,
           amount: parseInt(amount),
-          date: selectedDate.toISOString().split('T')[0], // Save date in ISO string format (only date part)
+          date: selectedDate.toISOString().split('T')[0],
         });
       }
-  
-      // Reset the form fields
+
       setSelectedOption('');
       setSelectedSubOption('');
       setAmount('');
       setSelectedDate(new Date());
-  
+
       console.log('Data saved to Firebase.');
     } else {
       alert('Please select an option, sub-option, date, and enter an amount.');
@@ -69,21 +66,24 @@ const Input = () => {
   };
 
   return (
-    <div>
-      <h2>Input Form</h2>
+    <>
+    <Header />
+    <div className="wrapper">
+    <div className="input-container">
+      <h2 className="input-title">Input Form</h2>
       <div>
-        <label>Select Option:</label>
-        <select value={selectedOption} onChange={handleOptionChange}>
-          <option value="">Select an option</option>
+        <label>Select Type:</label>
+        <select className="input-select" value={selectedOption} onChange={handleOptionChange}>
+          <option value="">Select an type</option>
           <option value="mg">MG</option>
           <option value="ls">LS</option>
         </select>
       </div>
       {selectedOption && (
         <div>
-          <label>Select Sub-Option:</label>
-          <select value={selectedSubOption} onChange={handleSubOptionChange}>
-            <option value="">Select a sub-option</option>
+          <label>Select Category:</label>
+          <select className="input-select" value={selectedSubOption} onChange={handleSubOptionChange}>
+            <option value="">Select a category</option>
             {selectedOption === 'mg' && (
               <>
                 <option value="pollo">Pollo</option>
@@ -101,9 +101,10 @@ const Input = () => {
           </select>
         </div>
       )}
-      <div>
+      <div className='diver'>
         <label>Amount:</label>
         <input
+          className="input-amount"
           type="number"
           value={amount}
           onChange={handleAmountChange}
@@ -112,13 +113,16 @@ const Input = () => {
       <div>
         <label>Select Date:</label>
         <input
+          className="input-date"
           type="date"
-          value={selectedDate.toISOString().split('T')[0]} // Display date in ISO format (only date part)
+          value={selectedDate.toISOString().split('T')[0]}
           onChange={handleDateChange}
         />
       </div>
-      <button onClick={handleSave}>Save</button>
+      <button className="input-button" onClick={handleSave}>Save</button>
     </div>
+    </div>
+    </>
   );
 }
 

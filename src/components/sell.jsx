@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import { collection, query, where, getDocs, updateDoc } from 'firebase/firestore';
+import './Sell.css'; // Import the CSS file
+import Header from './Heaer';
 
 const Sell = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const [selectedSubOption, setSelectedSubOption] = useState('');
   const [amount, setAmount] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
 
   useEffect(() => {
     // Initialize the form with the current option and sub-option values if needed
@@ -25,13 +28,18 @@ const Sell = () => {
     setAmount(event.target.value);
   };
 
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
+
   const handleSave = async () => {
-    if (selectedOption && selectedSubOption && amount) {
-      // Check if a document with the same option and sub-option exists
+    if (selectedOption && selectedSubOption && amount && selectedDate) {
+      // Check if a document with the same option, sub-option, and date exists
       const querySnapshot = await getDocs(
         query(collection(db, "items"), 
           where("option", "==", selectedOption),
-          where("subOption", "==", selectedSubOption)
+          where("subOption", "==", selectedSubOption),
+          where("date", "==", selectedDate) // Assuming you have a 'date' field in your documents
         )
       );
 
@@ -51,26 +59,30 @@ const Sell = () => {
           setSelectedOption('');
           setSelectedSubOption('');
           setAmount('');
+          setSelectedDate('');
 
           console.log('Data updated in Firebase.');
         } else {
           alert('Subtracting this amount would result in a negative value. Please enter a valid amount.');
         }
       } else {
-        alert('No matching document found. Please select a valid option and sub-option.');
+        alert('No matching document found. Please select a valid option, sub-option, and date.');
       }
     } else {
-      alert('Please select an option, sub-option, and enter an amount.');
+      alert('Please select an option, sub-option, date, and enter an amount.');
     }
   };
 
   return (
-    <div>
-      <h2>Sell Form</h2>
+    <>
+    <Header />
+    <div className="wrapper">
+    <div className="sell-container">
+      <h2 className="sell-title">Sell Form</h2>
       <div>
-        <label>Select Option:</label>
-        <select value={selectedOption} onChange={handleOptionChange}>
-          <option value="">Select an option</option>
+        <label>Select Type:</label>
+        <select className="sell-select" value={selectedOption} onChange={handleOptionChange}>
+          <option value="">Select an type</option>
           <option value="mg">MG</option>
           <option value="ls">LS</option>
           {/* Add more options as needed */}
@@ -78,9 +90,9 @@ const Sell = () => {
       </div>
       {selectedOption && (
         <div>
-          <label>Select Sub-Option:</label>
-          <select value={selectedSubOption} onChange={handleSubOptionChange}>
-            <option value="">Select a sub-option</option>
+          <label>Select Category:</label>
+          <select className="sell-select" value={selectedSubOption} onChange={handleSubOptionChange}>
+            <option value="">Select a category</option>
             {selectedOption === 'mg' && (
               <>
                 <option value="pollo">Pollo</option>
@@ -102,15 +114,27 @@ const Sell = () => {
         </div>
       )}
       <div>
+        <label>Date:</label>
+        <input
+          className="sell-date"
+          type="date"
+          value={selectedDate}
+          onChange={handleDateChange}
+        />
+      </div>
+      <div>
         <label>Amount to Subtract:</label>
         <input
+          className="sell-amount"
           type="number"
           value={amount}
           onChange={handleAmountChange}
         />
       </div>
-      <button onClick={handleSave}>Save</button>
+      <button className="sell-button" onClick={handleSave}>Save</button>
     </div>
+    </div>
+    </>
   );
 }
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
+import './Report.css'; // Import the CSS file
+import Header from './Heaer'
 
 const Report = () => {
   const [data, setData] = useState([]);
@@ -40,29 +42,38 @@ const Report = () => {
   };
 
   return (
-    <div>
-      <h2>Report Page</h2>
+    <>
+    <Header />
+    <div className="report-container">
+      <h2 className="report-title">Daily Report</h2>
       <div>
         <label>Select Date:</label>
         <input
+          className="report-select"
           type="date"
           value={selectedDate}
           onChange={handleDateChange}
         />
       </div>
-      <p>Data for: {formatDate(selectedDate)}</p>
+      <p className='data'>Data for: {formatDate(selectedDate)}</p>
+      <div className="reprt-container">
       {data.length === 0 ? (
         <p>No data available</p>
       ) : (
         data.map((item, index) => (
-          <div key={index} className="report-card">
-            <p>Option: {item.option}</p>
-            <p>Sub-Option: {item.subOption}</p>
+        
+<div key={index} className="report-card">
+            <p>Type: {item.option}</p>
+            <p>Category: {item.subOption}</p>
             <p>Amount: {item.amount}</p>
+       
           </div>
+          
         ))
       )}
+         </div>
     </div>
+    </>
   );
 };
 
