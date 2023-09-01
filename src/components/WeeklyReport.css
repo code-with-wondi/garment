@@ -1,0 +1,36 @@
+/* Add this CSS to a separate .css file or include it in your React component if you're using a CSS-in-JS approach */
+
+/* Style for the weekly report container */
+.weekly-report-container {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+  }
+  
+  /* Style for the table */
+  .weekly-report-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  /* Style for table headings */
+  .weekly-report-table th {
+    background-color: #f2f2f2;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  /* Style for table rows */
+  .weekly-report-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+  
+  /* Style for alternating rows (striped) */
+  .weekly-report-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
