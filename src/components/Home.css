@@ -2,3 +2,11 @@
     font-size: 70px;
    
 } */
+.wrapper{
+    display: flex;
+    flex-direction: column;
+}
+.wrapper img{
+    width: 400px;
+    height: 300px;
+}
