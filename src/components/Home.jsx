@@ -11,6 +11,8 @@ const Home = () => {
           Welcome to
           <br />
           NATEES Garment
+          <br />
+          Store system
         </h1>
       </div>
     </>

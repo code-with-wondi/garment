@@ -24,9 +24,6 @@ const Header = () => {
         <Link to="/week" className="lin">
           <p>Week report</p>
         </Link>
-        <div className="logout">
-          <p>Week report</p>
-        </div>
       </div>
     </>
   );
