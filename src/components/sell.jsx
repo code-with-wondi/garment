@@ -107,14 +107,10 @@ const Sell = () => {
               <option value="kids">Kids</option>
               <option value="roll">Roll</option>
               <option value="sewing">Sewing</option>
-              <option value="merch">Merch</option>
-              <option value="inks">Inks</option>
-              <option value="wearables">
-                Wearables <b>Store 8</b>
-              </option>
-              <option value="paper">Paper</option>
-              <option value="others">
-                Ohers <b>Store 10</b>
+              <option value="office">Office</option>
+              <option value="plasticsol">Plastic sol</option>
+              <option value="garmentone">
+                <b>Garment</b>
               </option>
             </select>
           </div>
@@ -176,9 +172,10 @@ const Sell = () => {
                     <option value="blackthreads">Black Threads</option>
                     <option value="yellowthreads">Yellow Threads</option>
                     <option value="bluethreads">Blue Threads</option>
+                    <option value="greenthreads">Green Threads</option>
                   </>
                 )}
-                {selectedOption === "merch" && (
+                {selectedOption === "office" && (
                   <>
                     <option value="cap">Cap</option>
                     <option value="mug">Mug</option>
@@ -199,7 +196,7 @@ const Sell = () => {
                     </option>
                   </>
                 )}
-                {selectedOption === "inks" && (
+                {selectedOption === "plasticsol" && (
                   <>
                     <option value="blackplastic">Black Plastic</option>
                     <option value="whiteplastic">White Plastic</option>
@@ -210,7 +207,7 @@ const Sell = () => {
                     <option value="binder">Binder</option>
                   </>
                 )}
-                {selectedOption === "wearables" && (
+                {selectedOption === "garmentone" && (
                   <>
                     <option value="rivan">Rivan</option>
                     <option value="necktag">Neck Tag</option>
@@ -219,22 +216,6 @@ const Sell = () => {
                     <option value="tshirtfestal">Tshirt Festal</option>
                     <option value="goldplastic">Gold Plastic</option>
                     <option value="vest">Vest</option>
-                  </>
-                )}
-                {selectedOption === "paper" && (
-                  <>
-                    <option value="stamp">Stamp</option>
-                    <option value="a4">A4</option>
-                    <option value="role">Role</option>
-                  </>
-                )}
-                {selectedOption === "others" && (
-                  <>
-                    <option value="mayandcape">May and cape</option>
-                    <option value="elink">E Link</option>
-                    <option value="mlink">M Link</option>
-                    <option value="ylink">Y Link</option>
-                    <option value="klink">K Link</option>
                   </>
                 )}
               </select>
