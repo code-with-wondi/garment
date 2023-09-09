@@ -11,7 +11,7 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Check if the user is logged in by accessing local storage
+    // Check ife user is logged in by accessing local storage
     const loggedInUser = localStorage.getItem("user");
     if (loggedInUser) {
       setUser(JSON.parse(loggedInUser));
@@ -32,7 +32,7 @@ function App() {
             path="week"
             element={
               user ? (
-                <Home user={user} handleLogout={handleLogout} />
+                <WeeklyReport user={user} handleLogout={handleLogout} />
               ) : (
                 <Navigate to="/login" />
               )
